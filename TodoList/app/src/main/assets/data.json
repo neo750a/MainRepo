@@ -1,0 +1,12 @@
+{
+  "UserSimple": [
+    {
+      "name": "lenny",
+      "age": 33
+    },
+    {
+      "name": "tony",
+      "age": 29
+    }
+  ]
+}
