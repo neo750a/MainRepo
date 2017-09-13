@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
             btnPause.setEnabled(true);
             btnCancel.setEnabled(true);
 
-            CountDownTimer cdt;
-
             //default time info
             long millisInFuture = 30000; //30 seconds
             long countDownInterval = 1000; //1 second
+
+            CountDownTimer cdt;
 
             //initialize countdowntimer
             cdt = new CountDownTimer(millisInFuture, countDownInterval) {
