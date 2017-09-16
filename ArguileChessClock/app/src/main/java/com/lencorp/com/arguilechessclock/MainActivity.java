@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         isP2Active = false;
         isGameStarted = false;
 
-        p1TimeRemaining = 30; //needs to be set default value
-        p2TimeRemaining = 30; //needs to be set default value
+        p1TimeRemaining = 30000; //needs to be set default value
+        p2TimeRemaining = 30000; //needs to be set default value
     }
 
     //for player one
@@ -342,8 +342,8 @@ public class MainActivity extends AppCompatActivity {
         btnP2Timer.setText("Timer has been Reset.  Press to Start!");
 
         //time remaining for both players needs to be reset
-        p1TimeRemaining = 30;
-        p2TimeRemaining = 30;
+        p1TimeRemaining = 30000;
+        p2TimeRemaining = 30000;
     }
 
 
