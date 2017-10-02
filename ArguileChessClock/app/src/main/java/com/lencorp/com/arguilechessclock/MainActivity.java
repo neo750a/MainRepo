@@ -1,11 +1,14 @@
 package com.lencorp.com.arguilechessclock;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnPause;
     Button btnSettings;
     Button btnCancel;
+
+    //sound
+    MediaPlayer turnSound;
 
     //variable that handles countdown timer paused status
     boolean isPaused;
@@ -26,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     //holds remaining time for countdown timer
     long p1TimeRemaining;
     long p2TimeRemaining;
+
+    //universal timer
+    long universalIntervalTimer;
+    long modTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +60,29 @@ public class MainActivity extends AppCompatActivity {
         isP2Active = false;
         isGameStarted = false;
 
-        p1TimeRemaining = 30000; //needs to be set default value
-        p2TimeRemaining = 30000; //needs to be set default value
+        universalIntervalTimer = 250;
+        modTimer = 1000;
+
+        p1TimeRemaining = 180000; //3 minutes
+        p2TimeRemaining = 180000; //3 minutes
+
+        turnSound = MediaPlayer.create(this, R.raw.chessclock);
     }
 
     //for player one
     public void StartP1Timer(View v) {
+        if(isP1Active == true)
+        {
+            //plays sound
+            turnSound.start();
+        }
 
         //if game hasn't started
         if(isGameStarted == false)
         {
             //set starting time for each player
-            btnP1Timer.setText("30");
-            btnP2Timer.setText("30");
+            btnP1Timer.setText("03:00:000");
+            btnP2Timer.setText("03:00:000");
 
             isPaused = false;
             isCancelled = false;
@@ -76,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
             btnCancel.setEnabled(true);
 
             //default time info
-            long millisInFuture = 30000; //30 seconds
-            long countDownInterval = 1000; //1 second
+            long millisInFuture = 180000; //3 minutes
+            long countDownInterval = universalIntervalTimer; //100 milliseconds
 
             CountDownTimer cdt;
 
@@ -97,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
                     {
                         //display the remaining seconds to app interface
                         //1 second == 1000 milliseconds
-                        btnP1Timer.setText("" + millisUntilFinished / 1000);
+                        btnP1Timer.setText("" + (millisUntilFinished / (1000 * 60)) % 60 + ":"
+                                + (millisUntilFinished / 1000) % 60 + ":"
+                                + millisUntilFinished % modTimer);
                         //put count down timer remaining time in a variable
                         p1TimeRemaining = millisUntilFinished;
                     }
@@ -129,13 +151,18 @@ public class MainActivity extends AppCompatActivity {
 
     //for player two
     public void StartP2Timer(View v) {
+        if(isP2Active == true)
+        {
+            //plays sound
+            turnSound.start();
+        }
 
         //if game hasn't started
         if(isGameStarted == false)
         {
             //set starting time for each player
-            btnP1Timer.setText("30");
-            btnP2Timer.setText("30");
+            btnP1Timer.setText("03:00:000");
+            btnP2Timer.setText("03:00:000");
 
             isPaused = false;
             isCancelled = false;
@@ -151,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
             CountDownTimer cdt2;
 
             //default time info
-            long millisInFuture = 30000; //30 seconds
-            long countDownInterval = 1000; //1 second
+            long millisInFuture = 180000; //30 seconds
+            long countDownInterval = universalIntervalTimer; //100 milliseconds
 
             //initialize countdowntimer
             cdt2 = new CountDownTimer(millisInFuture, countDownInterval) {
@@ -170,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
                     {
                         //diplay the remaining seconds to app interface
                         //1 second == 1000 milliseconds
-                        btnP2Timer.setText("" + millisUntilFinished / 1000);
+                        btnP2Timer.setText("" + (millisUntilFinished / (1000 * 60)) % 60 + ":"
+                                + (millisUntilFinished / 1000) % 60 + ":"
+                                + millisUntilFinished % modTimer);
                         //put count down timer remaining time in a variable
                         p2TimeRemaining = millisUntilFinished;
                     }
@@ -237,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize a new count down timer instance
         long millisInFuture = p1TimeRemaining;
-        long countDownInterval = 1000;
+        long countDownInterval = universalIntervalTimer; //100 milliseconds
         CountDownTimer newCDT;
 
         newCDT = new CountDownTimer(millisInFuture, countDownInterval) {
@@ -253,7 +282,9 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     //display timer on button
-                    btnP1Timer.setText("" + millisUntilFinished / 1000);
+                    btnP1Timer.setText("" + (millisUntilFinished / (1000 * 60)) % 60 + ":"
+                            + (millisUntilFinished / 1000) % 60 + ":"
+                            + millisUntilFinished % modTimer);
                     //put count down timer remaining time in a variable
                     p1TimeRemaining = millisUntilFinished;
                 }
@@ -288,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
 
         //initialize a new count down timer instance
         long millisInFuture = p2TimeRemaining;
-        long countDownInterval = 1000;
+        long countDownInterval = universalIntervalTimer; //100 milliseconds
         CountDownTimer newCDT2;
 
         newCDT2 = new CountDownTimer(millisInFuture, countDownInterval) {
@@ -304,7 +335,9 @@ public class MainActivity extends AppCompatActivity {
                 else
                 {
                     //display timer on button
-                    btnP2Timer.setText("" + millisUntilFinished / 1000);
+                    btnP2Timer.setText("" + (millisUntilFinished / (1000 * 60)) % 60 + ":"
+                            + (millisUntilFinished / 1000) % 60 + ":"
+                            + millisUntilFinished % modTimer);
                     //put count down timer remaining time in a variable
                     p2TimeRemaining = millisUntilFinished;
                 }
@@ -342,8 +375,8 @@ public class MainActivity extends AppCompatActivity {
         btnP2Timer.setText("Timer has been Reset.  Press to Start!");
 
         //time remaining for both players needs to be reset
-        p1TimeRemaining = 30000;
-        p2TimeRemaining = 30000;
+        p1TimeRemaining = 180000;//3 minutes
+        p2TimeRemaining = 180000;//3 minutes
     }
 
 

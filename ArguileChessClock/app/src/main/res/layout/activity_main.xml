@@ -10,24 +10,32 @@
 
     <Button
         android:id="@+id/btnP1Timer"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="219dp"
         android:layout_height="131dp"
+        android:background="@android:color/holo_blue_dark"
+        android:fontFamily="monospace"
         android:onClick="StartP1Timer"
-        android:text="30"
-        app:layout_constraintRight_toLeftOf="@+id/btnPause"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="00:00:000"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnPause"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnP2Timer"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="219dp"
         android:layout_height="131dp"
+        android:background="@android:color/holo_purple"
+        android:fontFamily="monospace"
         android:onClick="StartP2Timer"
-        android:text="30"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btnPause"
+        android:text="00:00:000"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnPause"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
