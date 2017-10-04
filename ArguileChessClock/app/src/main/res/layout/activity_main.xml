@@ -5,70 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.lencorp.com.arguilechessclock.MainActivity"
-    tools:layout_editor_absoluteY="73dp"
+    tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
     <Button
-        android:id="@+id/btnP1Timer"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="219dp"
-        android:layout_height="131dp"
-        android:background="@android:color/holo_blue_dark"
-        android:fontFamily="monospace"
-        android:onClick="StartP1Timer"
-        android:text="00:00:000"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btnPause"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnP2Timer"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="219dp"
-        android:layout_height="131dp"
-        android:background="@android:color/holo_purple"
-        android:fontFamily="monospace"
-        android:onClick="StartP2Timer"
-        android:text="00:00:000"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btnPause"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnPause"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="CallPauseTimer"
-        android:text="Pause"
-        app:layout_constraintBottom_toTopOf="@+id/btnCancel"
-        app:layout_constraintLeft_toRightOf="@+id/btnP1Timer"
-        app:layout_constraintRight_toLeftOf="@+id/btnP2Timer"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
-
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="PauseTimer"
+        android:onClick="OpenSettingsMenu"
         android:text="Settings"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnPause"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:onClick="CancelTimer"
-        android:text="Cancel"
-        app:layout_constraintRight_toLeftOf="@+id/btnP2Timer"
-        app:layout_constraintLeft_toRightOf="@+id/btnP1Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPause" />
-
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="StartGame"
+        android:text="Start"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
