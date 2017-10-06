@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Arguile Chess Clock</string>
+    <string name="select_time">Select Time</string>
+    <string-array name="default_game_times">
+        <item>Lightning 1 Min</item>
+        <item>Bullet 2 Min</item>
+        <item>Bullet 3 Min</item>
+        <item>Bullet 4 Min</item>
+        <item>Blitz 5 Min</item>
+        <item>Blitz 6 Min</item>
+        <item>Blitz 7 Min</item>
+        <item>Blitz 8 Min</item>
+        <item>Blitz 9 Min</item>
+        <item>Blitz 10 Min</item>
+    </string-array>
+
 </resources>
