@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     tools:context="com.lencorp.com.arguilechessclock.Settings"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
@@ -15,6 +17,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="32dp"
         android:digits="0123456789."
+        android:maxLength="4"
         android:ems="10"
         android:hint="Enter in Minutes"
         android:inputType="numberDecimal"
