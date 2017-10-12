@@ -1,6 +1,7 @@
 package com.lencorp.com.arguilechessclock;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,14 @@ public class play extends AppCompatActivity {
     boolean isP1Active;
     boolean isP2Active;
     boolean isGameStarted;
+    boolean isCustomTime;
+    boolean isSound;
     //holds remaining time for countdown timer
     long p1TimeRemaining;
     long p2TimeRemaining;
-
     long assignTime;
+
+    int tempActivePlayer;
 
     //universal timer
     long universalIntervalTimer;
@@ -58,15 +62,31 @@ public class play extends AppCompatActivity {
         isP1Active = false;
         isP2Active = false;
         isGameStarted = false;
-
+        //for timer
         universalIntervalTimer = 250;
         modTimer = 1000;
-
-        turnSound = MediaPlayer.create(this, R.raw.chessclock);
+        //for pause button
+        tempActivePlayer = 0;
+        //change background color of button to RED
+        btnPause.setBackgroundColor(Color.RED);
 
         //pick call made to settings via Intent
         Intent myLocalIntent = getIntent();
-        assignTime = myLocalIntent.getLongExtra("key1", 180000); // 180000 value is incase there is no data from intent
+        //default is preset time
+        isCustomTime = myLocalIntent.getBooleanExtra("key1", false);
+        //check if custom time was selected
+        if(isCustomTime == true)
+        {
+            assignTime = myLocalIntent.getLongExtra("key2", 180000); // 180000 value is incase there is no data from intent
+        }
+        else
+            assignTime = myLocalIntent.getLongExtra("key3", 180000); // 180000 value is incase there is no data from intent
+
+        //check if sound is off or on
+        isSound = myLocalIntent.getBooleanExtra("key4", true); //sound on by default
+
+        //assigns sound file
+        turnSound = MediaPlayer.create(this, R.raw.chessclock);
 
         p1TimeRemaining = assignTime; //3 minutes
         p2TimeRemaining = assignTime; //3 minutes
@@ -87,7 +107,12 @@ public class play extends AppCompatActivity {
 
     //for player one
     public void StartP1Timer(View v) {
-        if(isP1Active == true)
+        if(isPaused == true)
+        {
+            return;
+        }
+
+        if(isP1Active == true && isSound == true)
         {
             //plays sound
             turnSound.start();
@@ -167,7 +192,13 @@ public class play extends AppCompatActivity {
 
     //for player two
     public void StartP2Timer(View v) {
-        if(isP2Active == true)
+
+        if(isPaused == true)
+        {
+            return;
+        }
+
+        if(isP2Active == true && isSound == true)
         {
             //plays sound
             turnSound.start();
@@ -251,19 +282,47 @@ public class play extends AppCompatActivity {
     }
 
     public void PauseTimer() {
-        //when user is requesting to pause the count down timer
-        //pauses both player clocks
-        isPaused = true;
-        isP1Active = false;
-        isP2Active = false;
+        if(isPaused == false)
+        {
+            //change background color of button to GREEN
+            btnPause.setBackgroundColor(Color.GREEN);
+            //check who was active before pause was pressed
+            if(isP1Active == true)
+            {
+                tempActivePlayer = 1;
+            }
+            else tempActivePlayer = 2;
 
+            //when user is requesting to pause the count down timer
+            //pauses both player clocks
+            isPaused = true;
+            isP1Active = false;
+            isP2Active = false;
 
-        //enable the cancel button
-        btnCancel.setEnabled(true);
+            //enable the cancel button
+            btnCancel.setEnabled(true);
 
-        //disable the start and pause button
-        btnPause.setEnabled(false);
+            //disable the pause button
+            //btnPause.setEnabled(false);
 
+            //change text of pause button to "Resume"
+            btnPause.setText("Resume");
+        }
+        else if(isPaused == true)
+        {
+            //change background color of button to RED
+            btnPause.setBackgroundColor(Color.RED);
+
+            isPaused = false;
+            //set text back to "Pause"
+            btnPause.setText("Pause");
+
+            if(tempActivePlayer == 1)
+            {
+                ResumeP1Timer();
+            }
+            else ResumeP2Timer();
+        }
     }
 
     //for resume button player one

@@ -10,20 +10,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class Settings extends AppCompatActivity {
 
     Button btnSave;
     EditText etTime;
+    ToggleButton tbSound;
 
     Spinner spTime;
     ArrayAdapter<CharSequence> adapter;
 
+    boolean isSound;
     boolean isCustomTimeSelected;
+    boolean _ignore;
     //boolean doesDecimalExist;
     long selectedSpinnerItem;
 
@@ -37,12 +42,34 @@ public class Settings extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnSave);
         etTime = (EditText) findViewById(R.id.etTime);
         spTime = (Spinner) findViewById(R.id.spTime);
+        tbSound = (ToggleButton) findViewById(R.id.tbSound);
 
+        //default sound on
+        isSound = true;
+
+        //default sound being on
+        tbSound.setChecked(isSound);
+
+        tbSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tbSound.isChecked() == true)
+                {
+                    isSound = true;
+                }
+                else
+                    isSound = false;
+            }
+        });
+
+        //for spTime listener
         selectedSpinnerItem = 0;
         //global used for SaveSettingsMethod
         isCustomTimeSelected = false;
         //used in TextWatcher
         //doesDecimalExist = false;
+        //for text watcher
+        _ignore = false;
 
         //used for making etTime on focusable
         etKeyListener = etTime.getKeyListener();
@@ -71,38 +98,6 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-
-        TextWatcher watcher;
-
-        //text watcher that fires when text is changed in custom time
-        //Goal is to stop multiple decimals
-        etTime.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int before, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int after) {
-                //check if there is a decimal already in the string
-                String currentString = etTime.getText().toString();
-                //loop through string
-                for(int x = 0; x < before; x++)
-                {
-                    if(currentString.substring(x,x+1).equals("."))
-                    {
-                        //exits the textwatcher
-                        return;
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
     }
 
     public void OnRadioButtonClicked(View v)
@@ -141,7 +136,9 @@ public class Settings extends AppCompatActivity {
     public void SaveSettings(View v)
     {
         //create an intent to call main activity
-        Intent myIntent = new Intent(this, MainActivity.class);
+        Intent myIntent = new Intent(this, play.class);
+
+        myIntent.putExtra("key1", isCustomTimeSelected);
 
         if(isCustomTimeSelected == true)
         {
@@ -152,10 +149,13 @@ public class Settings extends AppCompatActivity {
             customTime = customTime * 60000;
 
             //supply intent with extra to pass data to second activity
-            myIntent.putExtra("key1", customTime);
+            myIntent.putExtra("key2", customTime);
         }
         //adding +1 since value is a position in array
-        myIntent.putExtra("key2", (selectedSpinnerItem + 1) * 60000);
+        myIntent.putExtra("key3", (selectedSpinnerItem + 1) * 60000);
+
+        //sound is off or on
+        myIntent.putExtra("key4", isSound);
 
         //start activity by intent
         startActivity(myIntent);
