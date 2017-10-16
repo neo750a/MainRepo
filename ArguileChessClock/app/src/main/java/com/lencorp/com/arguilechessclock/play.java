@@ -29,6 +29,7 @@ public class play extends AppCompatActivity {
     boolean isGameStarted;
     boolean isCustomTime;
     boolean isSound;
+    boolean isGameOver;
     //holds remaining time for countdown timer
     long p1TimeRemaining;
     long p2TimeRemaining;
@@ -58,6 +59,7 @@ public class play extends AppCompatActivity {
 
         isPaused = false;
         isCancelled = false;
+        isGameOver = false;
 
         isP1Active = false;
         isP2Active = false;
@@ -92,8 +94,8 @@ public class play extends AppCompatActivity {
         p2TimeRemaining = assignTime; //3 minutes
 
         //set starting text of buttons based on set time
-        btnP1Timer.setText("" + assignTime / 60000);
-        btnP2Timer.setText("" + assignTime / 60000);
+        btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
+        btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
     }
 
     public void OpenSettingsMenu(View v)
@@ -122,8 +124,8 @@ public class play extends AppCompatActivity {
         if(isGameStarted == false)
         {
             //set starting time for each player
-            btnP1Timer.setText("03:00:000");
-            btnP2Timer.setText("03:00:000");
+            //btnP1Timer.setText("03:00:000");
+            //btnP2Timer.setText("03:00:000");
 
             isPaused = false;
             isCancelled = false;
@@ -208,8 +210,8 @@ public class play extends AppCompatActivity {
         if(isGameStarted == false)
         {
             //set starting time for each player
-            btnP1Timer.setText("03:00:000");
-            btnP2Timer.setText("03:00:000");
+            //btnP1Timer.setText("03:00:000");
+            //btnP2Timer.setText("03:00:000");
 
             isPaused = false;
             isCancelled = false;
@@ -335,6 +337,12 @@ public class play extends AppCompatActivity {
         isP1Active = true;
         isP2Active = false;
 
+        if(isCancelled == true)
+        {
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
+        }
+
         //specify the current state is not paused and cancelled
         isPaused = false;
         isCancelled = false;
@@ -373,7 +381,9 @@ public class play extends AppCompatActivity {
                 btnPause.setEnabled(false);
                 //btnCancel.setEnabled(false);
                 //Pause game since game over
+                isGameOver = true;
                 PauseTimer();
+                //CancelTimer();
             }
         }.start(); //start timer
     }
@@ -384,6 +394,12 @@ public class play extends AppCompatActivity {
         //enable the pause and cancel button
         btnPause.setEnabled(true);
         btnCancel.setEnabled(true);
+
+        if(isCancelled == true)
+        {
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
+        }
 
         //specify the current state is not paused and cancelled
         isPaused = false;
@@ -426,13 +442,27 @@ public class play extends AppCompatActivity {
                 btnPause.setEnabled(false);
                 //btnCancel.setEnabled(false);
                 //Pause game since game over
+                isGameOver = true;
                 PauseTimer();
+                //CancelTimer();
             }
         }.start(); //start timer
     }
 
     //for cancel/stop button
-    public void CancelTimer(View v) {
+    public void CancelTimer() {
+
+        if(isGameOver == true)
+        {
+            // do nothing
+        }
+        else {
+            //notify user that count down timer is cancelled/stopped
+            btnP1Timer.setText("Timer has been Reset.  Press to Start!");
+            btnP2Timer.setText("Timer has been Reset.  Press to Start!");
+        }
+        isGameOver = false;
+
         //user wants timer to be cancelled
         isCancelled = true;
         //set game back to not being started
@@ -445,15 +475,14 @@ public class play extends AppCompatActivity {
         btnPause.setEnabled(false);
         btnCancel.setEnabled(false);
 
-        //notify user that count down timer is cancelled/stopped
-        btnP1Timer.setText("Timer has been Reset.  Press to Start!");
-        btnP2Timer.setText("Timer has been Reset.  Press to Start!");
-
         //time remaining for both players needs to be reset
-        p1TimeRemaining = assignTime;//3 minutes
-        p2TimeRemaining = assignTime;//3 minutes
+        p1TimeRemaining = assignTime;
+        p2TimeRemaining = assignTime;
     }
 
-
+    public void CallCancelTimer(View v)
+    {
+        CancelTimer();
+    }
 
 }

@@ -68,7 +68,7 @@
         android:id="@+id/btnCancel"
         android:layout_width="88dp"
         android:layout_height="48dp"
-        android:onClick="CancelTimer"
+        android:onClick="CallCancelTimer"
         android:soundEffectsEnabled="false"
         android:text="Reset"
         app:layout_constraintBottom_toTopOf="@+id/btnSettings"

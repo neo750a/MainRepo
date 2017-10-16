@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,7 @@ import android.widget.ToggleButton;
 public class Settings extends AppCompatActivity {
 
     Button btnSave;
-    EditText etTime;
+    //EditText etTime;
     ToggleButton tbSound;
 
     Spinner spTime;
@@ -40,7 +41,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         btnSave = (Button) findViewById(R.id.btnSave);
-        etTime = (EditText) findViewById(R.id.etTime);
+        //etTime = (EditText) findViewById(R.id.etTime);
         spTime = (Spinner) findViewById(R.id.spTime);
         tbSound = (ToggleButton) findViewById(R.id.tbSound);
 
@@ -72,9 +73,9 @@ public class Settings extends AppCompatActivity {
         _ignore = false;
 
         //used for making etTime on focusable
-        etKeyListener = etTime.getKeyListener();
+        //etKeyListener = etTime.getKeyListener();
         //disables focus
-        etTime.setKeyListener(null);
+        //etTime.setKeyListener(null);
 
         //parameters context, string array to use, layout of spinner item
         adapter = ArrayAdapter.createFromResource(this,R.array.default_game_times, android.R.layout.simple_spinner_item);
@@ -99,7 +100,8 @@ public class Settings extends AppCompatActivity {
             }
         });
     }
-
+/*
+    //no longer used
     public void OnRadioButtonClicked(View v)
     {
         //is button checked?
@@ -132,18 +134,21 @@ public class Settings extends AppCompatActivity {
                 break;
         }
     }
-
+*/
     public void SaveSettings(View v)
     {
         //create an intent to call main activity
         Intent myIntent = new Intent(this, play.class);
 
         myIntent.putExtra("key1", isCustomTimeSelected);
-
+/*
         if(isCustomTimeSelected == true)
         {
             //get data from edit text
-            long customTime = Long.parseLong(etTime.getText().toString());
+            //long customTime = (long)Double.parseDouble(etTime.getText().toString());
+            double customTime = Double.parseDouble(etTime.getText().toString());
+
+            Log.d("***CUSTOMTIME***", String.valueOf(customTime));
 
             //time in seconds
             customTime = customTime * 60000;
@@ -151,6 +156,7 @@ public class Settings extends AppCompatActivity {
             //supply intent with extra to pass data to second activity
             myIntent.putExtra("key2", customTime);
         }
+*/
         //adding +1 since value is a position in array
         myIntent.putExtra("key3", (selectedSpinnerItem + 1) * 60000);
 
