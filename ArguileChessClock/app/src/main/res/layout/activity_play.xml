@@ -13,32 +13,35 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="215dp"
         android:layout_height="280dp"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@android:color/darker_gray"
         android:fontFamily="monospace"
         android:onClick="StartP1Timer"
         android:soundEffectsEnabled="false"
         android:text="00:00:000"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btnSettings"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnP2Timer"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="215dp"
         android:layout_height="280dp"
-        android:background="@android:color/holo_purple"
+        android:background="@android:color/darker_gray"
+        android:elevation="0dp"
         android:fontFamily="monospace"
         android:onClick="StartP2Timer"
         android:soundEffectsEnabled="false"
         android:text="00:00:000"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnSettings"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btnSettings" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPause"

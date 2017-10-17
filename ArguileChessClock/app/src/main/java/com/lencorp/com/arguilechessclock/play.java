@@ -94,14 +94,17 @@ public class play extends AppCompatActivity {
         p2TimeRemaining = assignTime; //3 minutes
 
         //set starting text of buttons based on set time
-        btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
-        btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
+        btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+        btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
     }
 
     public void OpenSettingsMenu(View v)
     {
         //set an intent and assign it to the settings class
         Intent settingsIntent = new Intent(this, Settings.class);
+
+        settingsIntent.putExtra("key3", assignTime / 60000);
+        settingsIntent.putExtra("key4", isSound);
 
         //open the settings menu when settings button is pressed
         startActivity(settingsIntent);
@@ -165,6 +168,14 @@ public class play extends AppCompatActivity {
                                 + millisUntilFinished % modTimer);
                         //put count down timer remaining time in a variable
                         p1TimeRemaining = millisUntilFinished;
+
+                        //change color red if less then 30 seconds, yellow if less then 60 seconds
+                        if(p1TimeRemaining <= 30000)
+                        {
+                            btnP1Timer.setBackgroundColor(Color.RED);
+                        }
+                        else if(p1TimeRemaining <= 60000)
+                            btnP1Timer.setBackgroundColor(Color.YELLOW);
                     }
                 }
 
@@ -251,6 +262,14 @@ public class play extends AppCompatActivity {
                                 + millisUntilFinished % modTimer);
                         //put count down timer remaining time in a variable
                         p2TimeRemaining = millisUntilFinished;
+
+                        //change color red if less then 30 seconds, yellow if less then 60 seconds
+                        if(p2TimeRemaining <= 30000)
+                        {
+                            btnP2Timer.setBackgroundColor(Color.RED);
+                        }
+                        else if(p2TimeRemaining <= 60000)
+                            btnP2Timer.setBackgroundColor(Color.YELLOW);
                     }
 
                 }
@@ -337,10 +356,11 @@ public class play extends AppCompatActivity {
         isP1Active = true;
         isP2Active = false;
 
+
         if(isCancelled == true)
         {
-            btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
-            btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
         }
 
         //specify the current state is not paused and cancelled
@@ -370,6 +390,14 @@ public class play extends AppCompatActivity {
                             + millisUntilFinished % modTimer);
                     //put count down timer remaining time in a variable
                     p1TimeRemaining = millisUntilFinished;
+
+                    //change color red if less then 30 seconds, yellow if less then 60 seconds
+                    if(p1TimeRemaining <= 30000)
+                    {
+                        btnP1Timer.setBackgroundColor(Color.RED);
+                    }
+                    else if(p1TimeRemaining <= 60000)
+                        btnP1Timer.setBackgroundColor(Color.YELLOW);
                 }
             }
 
@@ -397,8 +425,8 @@ public class play extends AppCompatActivity {
 
         if(isCancelled == true)
         {
-            btnP1Timer.setText("" + assignTime / 60000 + ":00:00");
-            btnP2Timer.setText("" + assignTime / 60000 + ":00:00");
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
         }
 
         //specify the current state is not paused and cancelled
@@ -431,6 +459,14 @@ public class play extends AppCompatActivity {
                             + millisUntilFinished % modTimer);
                     //put count down timer remaining time in a variable
                     p2TimeRemaining = millisUntilFinished;
+
+                    //change color red if less then 30 seconds, yellow if less then 60 seconds
+                    if(p2TimeRemaining <= 30000)
+                    {
+                        btnP2Timer.setBackgroundColor(Color.RED);
+                    }
+                    else if(p2TimeRemaining <= 60000)
+                        btnP2Timer.setBackgroundColor(Color.YELLOW);
                 }
             }
 
@@ -458,10 +494,18 @@ public class play extends AppCompatActivity {
         }
         else {
             //notify user that count down timer is cancelled/stopped
-            btnP1Timer.setText("Timer has been Reset.  Press to Start!");
-            btnP2Timer.setText("Timer has been Reset.  Press to Start!");
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
         }
+        //reset game variables
         isGameOver = false;
+        isPaused = false;
+
+        //change background color of button to GREEN
+        btnPause.setBackgroundColor(Color.RED);
+
+        btnP1Timer.setBackgroundColor(Color.GRAY);
+        btnP2Timer.setBackgroundColor(Color.GRAY);
 
         //user wants timer to be cancelled
         isCancelled = true;

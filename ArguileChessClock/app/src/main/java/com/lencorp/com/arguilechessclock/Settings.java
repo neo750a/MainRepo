@@ -45,11 +45,25 @@ public class Settings extends AppCompatActivity {
         spTime = (Spinner) findViewById(R.id.spTime);
         tbSound = (ToggleButton) findViewById(R.id.tbSound);
 
-        //default sound on
-        isSound = true;
+        Intent myLocalIntent = getIntent();
 
-        //default sound being on
-        tbSound.setChecked(isSound);
+        selectedSpinnerItem = myLocalIntent.getLongExtra("key3", 0);
+        isSound = myLocalIntent.getBooleanExtra("key4", true);
+
+        //for spTime listener
+        //selectedSpinnerItem = 0;
+
+        //default sound on
+        //isSound = true;
+
+        if(isSound == true)
+        {
+            //default sound being on
+            tbSound.setChecked(true);
+        }
+        else
+            tbSound.setChecked(false);
+
 
         tbSound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +77,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-        //for spTime listener
-        selectedSpinnerItem = 0;
+
         //global used for SaveSettingsMethod
         isCustomTimeSelected = false;
         //used in TextWatcher
@@ -83,15 +96,20 @@ public class Settings extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //set adapter to spinner object
         spTime.setAdapter(adapter);
+        if(selectedSpinnerItem != 0)
+        {
+            //set default value
+            spTime.setSelection((int)selectedSpinnerItem);
+        }
 
         //handles when an item is selected on the spinner
         spTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //pop up that displays selected drop down item
-                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position)+ " selected.", Toast.LENGTH_LONG).show();
-                //assign selected item position to global
-                selectedSpinnerItem = position;
+                    //assign selected item position to global
+                    selectedSpinnerItem = position;
+                    //pop up that displays selected drop down item
+                    Toast.makeText(getBaseContext(), parent.getItemAtPosition(position)+ " selected.", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -140,7 +158,7 @@ public class Settings extends AppCompatActivity {
         //create an intent to call main activity
         Intent myIntent = new Intent(this, play.class);
 
-        myIntent.putExtra("key1", isCustomTimeSelected);
+        //myIntent.putExtra("key1", isCustomTimeSelected);
 /*
         if(isCustomTimeSelected == true)
         {
@@ -158,7 +176,13 @@ public class Settings extends AppCompatActivity {
         }
 */
         //adding +1 since value is a position in array
-        myIntent.putExtra("key3", (selectedSpinnerItem + 1) * 60000);
+        if(selectedSpinnerItem != 0)
+        {
+            myIntent.putExtra("key3", (selectedSpinnerItem) * 60000);
+        }
+        else
+            myIntent.putExtra("key3", (selectedSpinnerItem + 1) * 60000);
+
 
         //sound is off or on
         myIntent.putExtra("key4", isSound);
