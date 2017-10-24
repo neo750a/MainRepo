@@ -127,8 +127,8 @@ public class play extends AppCompatActivity {
         if(isGameStarted == false)
         {
             //set starting time for each player
-            //btnP1Timer.setText("03:00:000");
-            //btnP2Timer.setText("03:00:000");
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
 
             isPaused = false;
             isCancelled = false;
@@ -221,8 +221,8 @@ public class play extends AppCompatActivity {
         if(isGameStarted == false)
         {
             //set starting time for each player
-            //btnP1Timer.setText("03:00:000");
-            //btnP2Timer.setText("03:00:000");
+            btnP1Timer.setText("" + assignTime / 60000 + ":00:000");
+            btnP2Timer.setText("" + assignTime / 60000 + ":00:000");
 
             isPaused = false;
             isCancelled = false;
